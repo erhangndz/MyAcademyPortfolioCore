@@ -5,7 +5,7 @@ using Portfolio.Web.Context;
 
 namespace Portfolio.Web.Controllers
 {
-    [Authorize]
+   
     public class StatisticsController(PortfolioContext context) : Controller
     {
         public IActionResult Index()

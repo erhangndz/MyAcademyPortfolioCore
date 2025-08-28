@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Web.Context;
 using Portfolio.Web.Entities;
@@ -8,6 +9,7 @@ using System.Security.Claims;
 
 namespace Portfolio.Web.Controllers
 {
+    [AllowAnonymous]
     public class AuthController(PortfolioContext context) : Controller
     {
         public IActionResult Login()
@@ -57,6 +59,13 @@ namespace Portfolio.Web.Controllers
 
 
           
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Remove("UserName");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); 
+            return RedirectToAction("Index", "Default");
         }
     }
 }
